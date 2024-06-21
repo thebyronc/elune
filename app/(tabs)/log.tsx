@@ -1,6 +1,6 @@
 import {useState, useEffect, useRef} from 'react';
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { StyleSheet, Image, Platform, Pressable  } from "react-native";
+import { StyleSheet, Image, Platform, Pressable } from "react-native";
 
 import { Collapsible } from "@/components/Collapsible";
 import { ExternalLink } from "@/components/ExternalLink";
