@@ -44,7 +44,17 @@ export default function TabTwoScreen() {
       </ThemedText>
       <Pressable style={styles.button} onPress={handleTimerButton}>
         <ThemedText>
-          {isTimerActive ? 'Stop Timer' : 'Start Timer'}
+          {isTimerActive ? 'Stop' : 'Start'} Sleep Timer
+        </ThemedText>
+      </Pressable>
+      <Pressable style={styles.button} onPress={handleTimerButton}>
+        <ThemedText>
+         Track Feed
+        </ThemedText>
+      </Pressable>
+      <Pressable style={styles.button} onPress={handleTimerButton}>
+        <ThemedText>
+          Track Pee/Poo
         </ThemedText>
       </Pressable>
     </ParallaxScrollView>
@@ -69,6 +79,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 32,
     borderRadius: 4,
     elevation: 3,
-    backgroundColor: 'red',
+    backgroundColor: 'blue',
   },
 });
