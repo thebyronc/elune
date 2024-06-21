@@ -1,6 +1,6 @@
-import {useState} from 'react';
+import {useState, useEffect, useRef} from 'react';
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { StyleSheet, Image, Platform } from "react-native";
+import { StyleSheet, Image, Platform, Pressable  } from "react-native";
 
 import { Collapsible } from "@/components/Collapsible";
 import { ExternalLink } from "@/components/ExternalLink";
@@ -9,7 +9,21 @@ import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 
 export default function TabTwoScreen() {
+  const [isTimerActive, setIsTimerActive] = useState(false);
   const [time, setTime] = useState(0);
+  let timeInterval = useRef<any>(null);
+
+  const handleTimerButton = () => {
+    if (!isTimerActive) {
+      //start
+      setIsTimerActive(true);
+      timeInterval.current = setInterval(() => setTime(prevCount => prevCount + 1), 1000);
+    } else {
+      // stop
+      setIsTimerActive(false);
+      clearInterval(timeInterval.current);
+    }
+  };
 
   return (
     <ParallaxScrollView
@@ -22,9 +36,17 @@ export default function TabTwoScreen() {
         <ThemedText type="title">BC Log</ThemedText>
       </ThemedView>
       <ThemedText>
-        {time}
+        isTimerActive: {isTimerActive ? 'true' : 'false'}
       </ThemedText>
-      
+
+      <ThemedText>
+        time: {time}
+      </ThemedText>
+      <Pressable style={styles.button} onPress={handleTimerButton}>
+        <ThemedText>
+          {isTimerActive ? 'Stop Timer' : 'Start Timer'}
+        </ThemedText>
+      </Pressable>
     </ParallaxScrollView>
   );
 }
@@ -39,5 +61,14 @@ const styles = StyleSheet.create({
   titleContainer: {
     flexDirection: "row",
     gap: 8,
+  },
+  button: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 12,
+    paddingHorizontal: 32,
+    borderRadius: 4,
+    elevation: 3,
+    backgroundColor: 'red',
   },
 });
