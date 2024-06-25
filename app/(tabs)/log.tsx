@@ -1,6 +1,6 @@
 import {useState, useEffect, useRef} from 'react';
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { StyleSheet, Image, Platform, Pressable } from "react-native";
+import { StyleSheet, Image, Platform, Pressable, View } from "react-native";
 
 import { Collapsible } from "@/components/Collapsible";
 import { ExternalLink } from "@/components/ExternalLink";
@@ -13,17 +13,21 @@ export default function TabTwoScreen() {
   const [time, setTime] = useState(0);
   let timeInterval = useRef<any>(null);
 
-  const handleTimerButton = () => {
+  const handleTimerStart = () => {
     if (!isTimerActive) {
       //start
       setIsTimerActive(true);
       timeInterval.current = setInterval(() => setTime(prevCount => prevCount + 1), 1000);
-    } else {
+    }
+  };
+  
+  const handleTimerStop = () => {
+    if (isTimerActive) {      
       // stop
       setIsTimerActive(false);
       clearInterval(timeInterval.current);
-    }
-  };
+    }    
+  }
 
   return (
     <ParallaxScrollView
@@ -42,12 +46,22 @@ export default function TabTwoScreen() {
       <ThemedText>
         time: {time}
       </ThemedText>
-      <Pressable style={styles.button} onPress={handleTimerButton}>
-        <ThemedText>
-          {isTimerActive ? 'Stop' : 'Start'} Sleep Timer
-        </ThemedText>
-      </Pressable>
-      <Pressable style={styles.button} onPress={handleTimerButton}>
+      <ThemedText>
+        Sleep Timer
+      </ThemedText>
+      <View style={styles.buttonContainer}>
+        <Pressable style={styles.button} onPress={handleTimerStart}>
+          <ThemedText>
+            Start
+          </ThemedText>
+        </Pressable>
+        <Pressable style={styles.button} onPress={handleTimerStop}>
+          <ThemedText>
+            Stop
+          </ThemedText>
+        </Pressable>
+      </View>
+      {/* <Pressable style={styles.button} onPress={handleTimerButton}>
         <ThemedText>
          Track Feed
         </ThemedText>
@@ -56,7 +70,7 @@ export default function TabTwoScreen() {
         <ThemedText>
           Track Pee/Poo
         </ThemedText>
-      </Pressable>
+      </Pressable> */}
     </ParallaxScrollView>
   );
 }
@@ -76,9 +90,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingVertical: 12,
-    paddingHorizontal: 32,
     borderRadius: 4,
     elevation: 3,
     backgroundColor: 'blue',
+    width: "48%",
   },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  }
 });
